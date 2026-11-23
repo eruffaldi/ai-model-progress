@@ -34,7 +34,8 @@ where they bear on agentic coding.
 Run these, then follow the strongest links:
 
 - `<vendor> model releases <year> timeline` — run this for Anthropic, OpenAI,
-  Google and xAI separately; xAI is the one most often missed by aggregators
+  Google, xAI and Microsoft separately; xAI and Microsoft coding-only releases
+  are the ones most often missed by aggregators
 - `<model name> release date pricing benchmarks`
 - `Terminal-Bench <current major.minor> leaderboard`
 - `SWE-bench Pro leaderboard <year>`
@@ -48,14 +49,17 @@ by 5–15 points depending on harness; the disagreement is the signal, not noise
 
 Prefer, in order:
 
-1. **DeepSWE (current version)** — long-horizon SWE, one harness (mini-swe-agent)
-   for every model, with measured cost per task. The cleanest cross-vendor view;
-   record `cost_per_task` alongside the score.
-2. **Terminal-Bench (current major version)** — as of September 2026 that is 4.0
+1. **Terminal-Bench (current major version)** — as of November 2026 that is 4.0
    (66 multi-hour tasks, mostly outside classic software). Record the version;
    2.x, 3.0 and 4.0 are different task sets and are **not** comparable. The
-   official board lets each vendor use its own harness; also record the vals.ai
-   standardized run as `standardized_value` where one exists.
+   official board lets each vendor use its own harness; use the vals.ai
+   mini-swe-agent run as the primary `value` and record vendor runs separately
+   as `vendor_value` where they exist. TB 4.0 is the default and most common
+   performance metric in the tracker and spider plot; record `cost_per_task`
+   alongside it where available.
+2. **DeepSWE (current version)** — long-horizon SWE, one harness (mini-swe-agent)
+   for every model, with measured cost per task. Keep it as the primary
+   software-engineering cross-check; record `cost_per_task` alongside the score.
 3. **SWE-bench Pro** — repo-level, contamination-resistant. Use over Verified.
 
 Before ranking on any benchmark, check saturation: if the top five sit within
@@ -67,7 +71,9 @@ Before ranking on any benchmark, check saturation: if the top five sit within
 
 Also record input/output price per 1M tokens, context window, and the effort or
 reasoning level the score was produced at. A score without its effort level and
-harness is not usable.
+harness is not usable. Performance views, defaults and comparison summaries
+must prioritize TB 4.0 while newer models are still missing a standardized
+DeepSWE run.
 
 ## GitHub Copilot pricing
 

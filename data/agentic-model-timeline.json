@@ -1,10 +1,10 @@
 {
   "schema_version": "1.2",
-  "data_version": "1.3.0",
-  "generated_at": "2026-11-09",
+  "data_version": "1.5.0",
+  "generated_at": "2026-11-23",
   "window": {
     "from": "2026-01-01",
-    "to": "2026-11-09"
+    "to": "2026-11-23"
   },
   "benchmarks": {
     "tb21": {
@@ -411,7 +411,7 @@
       "name": "Claude Mythos Preview",
       "tier": "frontier",
       "released": "2026-04-07",
-      "availability": "restricted",
+      "availability": "ga",
       "anchor": false,
       "context_window": 1000000,
       "price_in": null,
@@ -2146,7 +2146,7 @@
       "name": "Gemini 4 Carbon",
       "tier": "frontier",
       "released": "2026-10-28",
-      "availability": "restricted",
+      "availability": "ga",
       "anchor": false,
       "context_window": 1000000,
       "price_in": 2.0,
@@ -2162,14 +2162,386 @@
           "cost_per_task": 7.45
         }
       },
-      "notes": "Initially limited to selected cyber defenders and trusted partners. Google announced future introductory API pricing of $2/$10 per million tokens; Vals lists $4/$20. Context window reported by Vals.",
+      "notes": "Initially limited to selected cyber defenders and trusted partners, then opened to paying developers and Google AI Ultra subscribers on November 10. Google's introductory API and Copilot price is $2/$10 through December 1; Vals lists the post-introduction $4/$20 rate.",
       "sources": [
         "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/",
+        "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/",
         "https://www.vals.ai/models/google_gemini-4-carbon"
       ],
       "copilot": {
+        "available": true,
+        "release_status": "GA",
+        "category": "Powerful",
+        "input": 2.0,
+        "cached_input": 0.1,
+        "cache_write": null,
+        "output": 10.0,
+        "long_context": null,
+        "promo": "Introductory rates until 2026-12-01; then $4/$20 input/output",
+        "source": "github-copilot-pricing"
+      }
+    },
+    {
+      "id": "anthropic-fable-5-2",
+      "vendor": "Anthropic",
+      "name": "Claude Fable 5.2",
+      "tier": "frontier",
+      "released": "2026-11-09",
+      "availability": "ga",
+      "anchor": false,
+      "context_window": 1000000,
+      "price_in": 8.0,
+      "price_out": 40.0,
+      "scores": {
+        "tb40": {
+          "value": 65.15,
+          "vendor_value": 70.6,
+          "harness": "mini-SWE-agent (Vals AI) / Anthropic-reported",
+          "effort": "high / not specified",
+          "source": "https://www.vals.ai/models/anthropic_claude-fable-5-2",
+          "confidence": "high",
+          "cost_per_task": 14.56,
+          "standardized_value": 65.15,
+          "standardized_source": "https://www.vals.ai/benchmarks/terminal-bench-4"
+        }
+      },
+      "notes": "Anthropic's public-facing 5.2 frontier model, with the same underlying weights as restricted Mythos 5.2. It is 20% cheaper and up to 30% faster than Fable 5.1. The API has 128K maximum output; fast mode costs $16/$80 per million input/output tokens.",
+      "sources": [
+        "https://www.anthropic.com/claude-fable-and-mythos-5-2",
+        "https://www.vals.ai/models/anthropic_claude-fable-5-2"
+      ],
+      "copilot": {
+        "available": true,
+        "release_status": "GA",
+        "category": "Powerful",
+        "input": 8.0,
+        "cached_input": 0.2,
+        "cache_write": 10.0,
+        "output": 40.0,
+        "long_context": null,
+        "promo": null,
+        "source": "github-copilot-pricing"
+      }
+    },
+    {
+      "id": "anthropic-mythos-5-2",
+      "vendor": "Anthropic",
+      "name": "Claude Mythos 5.2",
+      "tier": "frontier",
+      "released": "2026-11-09",
+      "availability": "restricted",
+      "anchor": false,
+      "context_window": 1000000,
+      "price_in": 8.0,
+      "price_out": 40.0,
+      "scores": {},
+      "notes": "Same underlying weights as Claude Fable 5.2 but with fewer public safety restrictions. Access is limited to organizations accepted into Anthropic's Cyber and Life Sciences Verification Programs; no separately replicated standardized score is published.",
+      "sources": [
+        "https://www.anthropic.com/claude-fable-and-mythos-5-2"
+      ],
+      "copilot": {
         "available": false,
-        "note": "Not listed in GitHub's pricing table as of 2026-11-09.",
+        "note": "Restricted access; not offered in GitHub Copilot.",
+        "source": "github-copilot-pricing"
+      }
+    },
+    {
+      "id": "google-gemini-decision-1",
+      "vendor": "Google",
+      "name": "Gemini Decision 1",
+      "tier": "efficient",
+      "released": "2026-11-11",
+      "availability": "ga",
+      "anchor": false,
+      "context_window": 262000,
+      "price_in": 0.1,
+      "price_out": 0.0,
+      "scores": {},
+      "notes": "Specialized multimodal decision model for structured yes/no, choice and rubric outputs. Designed for agent routing, policy checks, grading and workflow branching rather than code generation; maximum text output is zero.",
+      "sources": [
+        "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api/",
+        "https://www.vals.ai/models/decision_gemini-decision-1"
+      ],
+      "copilot": {
+        "available": false,
+        "note": "Not in the Copilot catalogue.",
+        "source": "github-copilot-pricing"
+      }
+    },
+    {
+      "id": "google-gemini-4-hydrogen",
+      "vendor": "Google",
+      "name": "Gemini 4 Hydrogen",
+      "tier": "efficient",
+      "released": "2026-11-12",
+      "availability": "ga",
+      "anchor": false,
+      "context_window": 1000000,
+      "price_in": 1.5,
+      "price_out": 7.5,
+      "scores": {
+        "tb40": {
+          "value": 54.04,
+          "vendor_value": null,
+          "harness": "mini-SWE-agent (Vals AI)",
+          "effort": "xhigh",
+          "source": "https://www.vals.ai/models/google_gemini-4-hydrogen",
+          "confidence": "high",
+          "cost_per_task": 7.56
+        }
+      },
+      "notes": "Fast everyday coding and agentic-workflow model positioned below Carbon and Neon for depth and price. The 1M-token unified context window supports up to 1M output tokens in asynchronous/background runs.",
+      "sources": [
+        "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-hydrogen/",
+        "https://www.vals.ai/models/google_gemini-4-hydrogen"
+      ],
+      "copilot": {
+        "available": true,
+        "release_status": "GA",
+        "category": "Versatile",
+        "input": 1.5,
+        "cached_input": 0.075,
+        "cache_write": null,
+        "output": 7.5,
+        "long_context": null,
+        "promo": null,
+        "source": "github-copilot-pricing"
+      }
+    },
+    {
+      "id": "openai-gpt-6-2-astra",
+      "vendor": "OpenAI",
+      "name": "GPT-6.2 Astra",
+      "tier": "frontier",
+      "released": "2026-11-17",
+      "availability": "ga",
+      "anchor": false,
+      "context_window": 1050000,
+      "price_in": 8.0,
+      "price_out": 40.0,
+      "scores": {
+        "tb40": {
+          "value": 63.13,
+          "vendor_value": null,
+          "harness": "mini-SWE-agent (Vals AI)",
+          "effort": "max",
+          "source": "https://www.vals.ai/models/openai_gpt-6.2-astra",
+          "confidence": "high",
+          "cost_per_task": 4.69,
+          "standardized_value": 63.13,
+          "standardized_source": "https://www.vals.ai/benchmarks/terminal-bench-4"
+        }
+      },
+      "notes": "Frontier model for the hardest professional and agentic work, with 128K maximum output. Standard API requests above 272K input tokens use a $16/$60 input/output tier; batch requests are half price and fast modes are higher priced.",
+      "sources": [
+        "https://openai.com/index/introducing-gpt-6-2-astra-sol/",
+        "https://developers.openai.com/api/docs/models/gpt-6.2-astra",
+        "https://www.vals.ai/models/openai_gpt-6.2-astra"
+      ],
+      "copilot": {
+        "available": true,
+        "release_status": "GA",
+        "category": "Powerful",
+        "input": 8.0,
+        "cached_input": 0.4,
+        "cache_write": 10.0,
+        "output": 40.0,
+        "long_context": {
+          "threshold": 272000,
+          "input": 16.0,
+          "cached_input": 0.8,
+          "cache_write": 20.0,
+          "output": 60.0
+        },
+        "promo": null,
+        "source": "github-copilot-pricing"
+      }
+    },
+    {
+      "id": "openai-gpt-6-2-sol",
+      "vendor": "OpenAI",
+      "name": "GPT-6.2 Sol",
+      "tier": "mid",
+      "released": "2026-11-17",
+      "availability": "ga",
+      "anchor": false,
+      "context_window": 1050000,
+      "price_in": 2.0,
+      "price_out": 10.0,
+      "scores": {
+        "tb40": {
+          "value": 60.61,
+          "vendor_value": null,
+          "harness": "mini-SWE-agent (Vals AI)",
+          "effort": "max",
+          "source": "https://www.vals.ai/models/openai_gpt-6.2-sol",
+          "confidence": "high",
+          "cost_per_task": 1.13,
+          "standardized_value": 60.61,
+          "standardized_source": "https://www.vals.ai/benchmarks/terminal-bench-4"
+        }
+      },
+      "notes": "Cost-efficient counterpart to GPT-6.2 Astra for repeatable professional and coding workflows. It retains GPT-6.1 Sol's $2/$10 standard rates, 128K maximum output and 272K long-context threshold.",
+      "sources": [
+        "https://openai.com/index/introducing-gpt-6-2-astra-sol/",
+        "https://developers.openai.com/api/docs/models/gpt-6.2-sol",
+        "https://www.vals.ai/models/openai_gpt-6.2-sol"
+      ],
+      "copilot": {
+        "available": true,
+        "release_status": "GA",
+        "category": "Powerful",
+        "input": 2.0,
+        "cached_input": 0.1,
+        "cache_write": 2.5,
+        "output": 10.0,
+        "long_context": {
+          "threshold": 272000,
+          "input": 4.0,
+          "cached_input": 0.2,
+          "cache_write": 5.0,
+          "output": 15.0
+        },
+        "promo": null,
+        "source": "github-copilot-pricing"
+      }
+    },
+    {
+      "id": "microsoft-mai-code-2",
+      "vendor": "Microsoft",
+      "name": "MAI Code 2",
+      "tier": "coding",
+      "released": "2026-11-17",
+      "availability": "ga",
+      "anchor": false,
+      "context_window": 1050000,
+      "price_in": null,
+      "price_out": null,
+      "scores": {
+        "deepswe": {
+          "value": 73.2,
+          "vendor_value": 73.2,
+          "harness": "MSBench + GitHub Copilot CLI 1.0.102",
+          "effort": "max",
+          "source": "https://microsoft.ai/pdf/MAI-Code-2-And-MAI-Code-2-Flash-Model-Card.pdf?v=2",
+          "confidence": "low"
+        },
+        "tb21": {
+          "value": 84.6,
+          "vendor_value": 84.6,
+          "harness": "MSBench + GitHub Copilot CLI 1.0.102",
+          "effort": "max",
+          "source": "https://microsoft.ai/pdf/MAI-Code-2-And-MAI-Code-2-Flash-Model-Card.pdf?v=2",
+          "confidence": "low"
+        }
+      },
+      "notes": "Microsoft's powerful first-party coding model, designed for deep debugging, multi-file implementation, refactoring and repository-wide reasoning. The 1.05M-token context combines 922K input with 128K output. Scores are vendor-only, averaged over three runs, and use the Copilot CLI harness rather than the standardized mini-swe-agent setup used elsewhere in this tracker.",
+      "sources": [
+        "https://microsoft.ai/news/introducing-mai-code-2-and-mai-code-2-flash/",
+        "https://microsoft.ai/pdf/MAI-Code-2-And-MAI-Code-2-Flash-Model-Card.pdf?v=2",
+        "https://github.blog/changelog/2026-11-17-mai-code-2-and-mai-code-2-flash-in-github-copilot/"
+      ],
+      "copilot": {
+        "available": true,
+        "release_status": "GA",
+        "category": "Powerful",
+        "input": 0.5,
+        "cached_input": 0.025,
+        "cache_write": null,
+        "output": 2.5,
+        "long_context": null,
+        "promo": "Until 2027-05-17; then $1/$5 input/output",
+        "source": "github-copilot-pricing"
+      }
+    },
+    {
+      "id": "microsoft-mai-code-2-flash",
+      "vendor": "Microsoft",
+      "name": "MAI Code 2 Flash",
+      "tier": "coding",
+      "released": "2026-11-17",
+      "availability": "ga",
+      "anchor": false,
+      "context_window": 1050000,
+      "price_in": null,
+      "price_out": null,
+      "scores": {
+        "deepswe": {
+          "value": 59.9,
+          "vendor_value": 59.9,
+          "harness": "MSBench + GitHub Copilot CLI 1.0.102",
+          "effort": "max",
+          "source": "https://microsoft.ai/pdf/MAI-Code-2-And-MAI-Code-2-Flash-Model-Card.pdf?v=2",
+          "confidence": "low"
+        },
+        "tb21": {
+          "value": 78.3,
+          "vendor_value": 78.3,
+          "harness": "MSBench + GitHub Copilot CLI 1.0.102",
+          "effort": "max",
+          "source": "https://microsoft.ai/pdf/MAI-Code-2-And-MAI-Code-2-Flash-Model-Card.pdf?v=2",
+          "confidence": "low"
+        }
+      },
+      "notes": "Microsoft's lightweight, cost-efficient coding model for explanations, targeted edits, routine fixes and rapid iteration. The 1.05M-token context combines 922K input with 128K output. Scores are vendor-only, averaged over three runs, and use the Copilot CLI harness.",
+      "sources": [
+        "https://microsoft.ai/news/introducing-mai-code-2-and-mai-code-2-flash/",
+        "https://microsoft.ai/pdf/MAI-Code-2-And-MAI-Code-2-Flash-Model-Card.pdf?v=2",
+        "https://github.blog/changelog/2026-11-17-mai-code-2-and-mai-code-2-flash-in-github-copilot/"
+      ],
+      "copilot": {
+        "available": true,
+        "release_status": "GA",
+        "category": "Lightweight",
+        "input": 0.05,
+        "cached_input": 0.005,
+        "cache_write": null,
+        "output": 0.25,
+        "long_context": null,
+        "promo": "Until 2027-05-17; then $0.10/$0.50 input/output",
+        "source": "github-copilot-pricing"
+      }
+    },
+    {
+      "id": "google-gemini-4-neon",
+      "vendor": "Google",
+      "name": "Gemini 4 Neon",
+      "tier": "mid",
+      "released": "2026-11-18",
+      "availability": "ga",
+      "anchor": false,
+      "context_window": 1000000,
+      "price_in": 3.0,
+      "price_out": 15.0,
+      "scores": {
+        "tb40": {
+          "value": 61.62,
+          "vendor_value": null,
+          "harness": "mini-SWE-agent (Vals AI)",
+          "effort": "xhigh",
+          "source": "https://www.vals.ai/models/google_gemini-4-neon",
+          "confidence": "high",
+          "cost_per_task": 6.42,
+          "standardized_value": 61.62,
+          "standardized_source": "https://www.vals.ai/benchmarks/terminal-bench-4"
+        }
+      },
+      "notes": "Balances Carbon-class depth with faster execution. Google reports 65.2% on Terminal-Bench 4.1, a different task version, while Vals reports 61.62% on standardized Terminal-Bench 4.0. The 1M-token context supports up to 1M output tokens for background decoding.",
+      "sources": [
+        "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon/",
+        "https://deepmind.google/models/model-cards/gemini-4-neon/",
+        "https://www.vals.ai/models/google_gemini-4-neon"
+      ],
+      "copilot": {
+        "available": true,
+        "release_status": "GA",
+        "category": "Versatile",
+        "input": 3.0,
+        "cached_input": 0.15,
+        "cache_write": null,
+        "output": 15.0,
+        "long_context": null,
+        "promo": null,
         "source": "github-copilot-pricing"
       }
     }
@@ -2194,7 +2566,20 @@
       "benchmark": "pricing",
       "values": ["$2/$10 per million input/output (Google announced introductory)", "$4/$20 (Vals)"],
       "sources": ["https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/", "https://www.vals.ai/models/google_gemini-4-carbon"],
-      "note": "Google's future introductory rate and Vals' listed rate differ; access remains restricted."
+      "note": "Google's introductory $2/$10 rate runs through December 1, while Vals lists the $4/$20 post-introduction rate."
+    },
+    {
+      "model": "anthropic-fable-5-2",
+      "benchmark": "tb40",
+      "values": [
+        65.15,
+        70.6
+      ],
+      "sources": [
+        "https://www.vals.ai/benchmarks/terminal-bench-4",
+        "https://www.anthropic.com/claude-fable-and-mythos-5-2"
+      ],
+      "note": "Vals' standardized mini-SWE-agent run is 65.15% at high effort; Anthropic reports 70.6% under its launch configuration. Keep the standardized value for ranking and the vendor figure separately."
     },
     {
       "model": "anthropic-opus-4-8",
@@ -2439,6 +2824,12 @@
       "date": "2026-11-09",
       "snapshot": true,
       "change": "Added Claude Haiku 5.5, Gemini 4 Argon, GPT-6.1 Terra and restricted Gemini 4 Carbon with available Terminal-Bench 4.0 scores and Copilot rates. Added GPT-6.1 Sol's Vals score, corrected Sonnet 5.5 cache-read pricing and benchmark effort, and documented Haiku score and Gemini pricing discrepancies."
+    },
+    {
+      "version": "1.5.0",
+      "date": "2026-11-23",
+      "snapshot": true,
+      "change": "Added Claude Fable 5.2 and restricted Mythos 5.2, Gemini Decision 1, Gemini 4 Hydrogen and Neon, GPT-6.2 Astra and Sol, and Microsoft MAI Code 2 and Flash with published benchmark and Copilot rates. Gemini 4 Carbon moved from restricted preview to general availability and joined Copilot. Extended the timeline through November with a data-driven multi-year axis ready for 2027, refreshed the catalogue and promotional expiry metadata, and documented the Fable 5.2 benchmark conflict."
     }
   ],
   "sources": [
@@ -2447,7 +2838,7 @@
       "title": "Models and pricing for GitHub Copilot",
       "publisher": "GitHub Docs",
       "url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing",
-      "accessed": "2026-11-09",
+      "accessed": "2026-11-23",
       "type": "vendor-docs",
       "use": "Copilot per-token rates, release status, category and long-context thresholds for every model in the Copilot catalogue"
     },
@@ -2780,7 +3171,7 @@
       "title": "Terminal-Bench 4.0",
       "publisher": "Vals AI",
       "url": "https://www.vals.ai/benchmarks/terminal-bench-4",
-      "accessed": "2026-11-09",
+      "accessed": "2026-11-23",
       "type": "standardized-eval",
       "use": "TB 4.0 standardized mini-SWE-agent runs for cross-vendor comparison; cost per task"
     },
@@ -2927,6 +3318,141 @@
       "accessed": "2026-11-09",
       "type": "standardized-eval",
       "use": "Carbon context, evaluation effort and Vals' listed pricing"
+    },
+    {
+      "id": "anthropic-fable52",
+      "title": "Introducing Claude Fable 5.2 and Claude Mythos 5.2",
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/claude-fable-and-mythos-5-2",
+      "accessed": "2026-11-23",
+      "type": "vendor-announcement",
+      "use": "Fable 5.2 and Mythos 5.2 release, pricing, access controls and vendor benchmarks"
+    },
+    {
+      "id": "vals-fable52",
+      "title": "Claude Fable 5.2 model profile",
+      "publisher": "Vals AI",
+      "url": "https://www.vals.ai/models/anthropic_claude-fable-5-2",
+      "accessed": "2026-11-23",
+      "type": "standardized-eval",
+      "use": "Fable 5.2 Terminal-Bench 4.0 score, cost and evaluation effort"
+    },
+    {
+      "id": "google-gemini-decision1",
+      "title": "Gemini Decisions API",
+      "publisher": "Google",
+      "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api/",
+      "accessed": "2026-11-23",
+      "type": "vendor-announcement",
+      "use": "Gemini Decision 1 release, structured-output role and pricing"
+    },
+    {
+      "id": "vals-gemini-decision1",
+      "title": "Gemini Decision 1 model profile",
+      "publisher": "Vals AI",
+      "url": "https://www.vals.ai/models/decision_gemini-decision-1",
+      "accessed": "2026-11-23",
+      "type": "standardized-eval",
+      "use": "Decision 1 context, release date, pricing and specialized benchmark coverage"
+    },
+    {
+      "id": "google-gemini4-hydrogen",
+      "title": "Introducing Gemini 4 Hydrogen",
+      "publisher": "Google",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-hydrogen/",
+      "accessed": "2026-11-23",
+      "type": "vendor-announcement",
+      "use": "Hydrogen release, positioning, context and API pricing"
+    },
+    {
+      "id": "vals-gemini4-hydrogen",
+      "title": "Gemini 4 Hydrogen model profile",
+      "publisher": "Vals AI",
+      "url": "https://www.vals.ai/models/google_gemini-4-hydrogen",
+      "accessed": "2026-11-23",
+      "type": "standardized-eval",
+      "use": "Hydrogen Terminal-Bench 4.0 score, cost and evaluation effort"
+    },
+    {
+      "id": "openai-gpt62",
+      "title": "Introducing GPT-6.2 Astra and Sol",
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/introducing-gpt-6-2-astra-sol/",
+      "accessed": "2026-11-23",
+      "type": "vendor-announcement",
+      "use": "GPT-6.2 Astra and Sol release, positioning and API pricing"
+    },
+    {
+      "id": "vals-gpt62-astra",
+      "title": "GPT-6.2 Astra model profile",
+      "publisher": "Vals AI",
+      "url": "https://www.vals.ai/models/openai_gpt-6.2-astra",
+      "accessed": "2026-11-23",
+      "type": "standardized-eval",
+      "use": "Astra release, Terminal-Bench 4.0 score, cost and evaluation effort"
+    },
+    {
+      "id": "vals-gpt62-sol",
+      "title": "GPT-6.2 Sol model profile",
+      "publisher": "Vals AI",
+      "url": "https://www.vals.ai/models/openai_gpt-6.2-sol",
+      "accessed": "2026-11-23",
+      "type": "standardized-eval",
+      "use": "Sol release, Terminal-Bench 4.0 score, cost and evaluation effort"
+    },
+    {
+      "id": "google-gemini4-neon",
+      "title": "Introducing Gemini 4 Neon",
+      "publisher": "Google",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon/",
+      "accessed": "2026-11-23",
+      "type": "vendor-announcement",
+      "use": "Neon release, coding positioning, context and API pricing"
+    },
+    {
+      "id": "vals-gemini4-neon",
+      "title": "Gemini 4 Neon model profile",
+      "publisher": "Vals AI",
+      "url": "https://www.vals.ai/models/google_gemini-4-neon",
+      "accessed": "2026-11-23",
+      "type": "standardized-eval",
+      "use": "Neon Terminal-Bench 4.0 score, cost and evaluation effort"
+    },
+    {
+      "id": "google-gemini4-carbon-ga",
+      "title": "Gemini 4 Carbon is now available",
+      "publisher": "Google",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/",
+      "accessed": "2026-11-23",
+      "type": "vendor-announcement",
+      "use": "Carbon broad-availability date and introductory API price"
+    },
+    {
+      "id": "microsoft-mai-code2",
+      "title": "Introducing MAI Code 2 and MAI Code 2 Flash",
+      "publisher": "Microsoft AI",
+      "url": "https://microsoft.ai/news/introducing-mai-code-2-and-mai-code-2-flash/",
+      "accessed": "2026-11-23",
+      "type": "vendor-announcement",
+      "use": "MAI Code 2 and Flash release, positioning and model capabilities"
+    },
+    {
+      "id": "microsoft-mai-code2-card",
+      "title": "MAI Code 2 and MAI Code 2 Flash model card",
+      "publisher": "Microsoft AI",
+      "url": "https://microsoft.ai/pdf/MAI-Code-2-And-MAI-Code-2-Flash-Model-Card.pdf?v=2",
+      "accessed": "2026-11-23",
+      "type": "vendor-docs",
+      "use": "Context length, DeepSWE and Terminal-Bench 2.1 scores, harness and reasoning effort"
+    },
+    {
+      "id": "github-mai-code2",
+      "title": "MAI Code 2 and MAI Code 2 Flash in GitHub Copilot",
+      "publisher": "GitHub Changelog",
+      "url": "https://github.blog/changelog/2026-11-17-mai-code-2-and-mai-code-2-flash-in-github-copilot/",
+      "accessed": "2026-11-23",
+      "type": "vendor-announcement",
+      "use": "Copilot availability, plan coverage and release date"
     }
   ],
   "copilot_catalog_extra": [
@@ -2947,30 +3473,6 @@
       "output": 1.2
     },
     {
-      "name": "GPT-5 mini",
-      "vendor": "OpenAI",
-      "category": "Lightweight",
-      "input": 0.25,
-      "cached_input": 0.025,
-      "output": 2.0
-    },
-    {
-      "name": "Kimi K2.7 Code",
-      "vendor": "Moonshot AI",
-      "category": "Versatile",
-      "input": 0.95,
-      "cached_input": 0.19,
-      "output": 4.0
-    },
-    {
-      "name": "GPT-5.4 mini",
-      "vendor": "OpenAI",
-      "category": "Lightweight",
-      "input": 0.75,
-      "cached_input": 0.075,
-      "output": 4.5
-    },
-    {
       "name": "Claude Sonnet 4",
       "vendor": "Anthropic",
       "category": "Versatile",
@@ -2988,7 +3490,7 @@
       "output": 15.0
     },
     {
-      "name": "Claude Opus 4.8 (fast mode, preview)",
+      "name": "Claude Opus 4.8 (fast mode) (preview)",
       "vendor": "Anthropic",
       "category": "Powerful",
       "input": 10.0,
@@ -2999,7 +3501,7 @@
   ],
   "copilot_meta": {
     "source": "github-copilot-pricing",
-    "fetched": "2026-11-09",
+    "fetched": "2026-11-23",
     "billing": "Usage-based, priced per million tokens. Input, cached input and output tokens convert to GitHub AI Credits at each model's published rate, 1 AI credit = $0.01. Individual paid plans have monthly base and flex credits; Business and Enterprise allowances are pooled at the billing entity. Additional usage is billed at published per-token rates. Code completions and next edit suggestions are not billed in AI credits.",
     "plans": {
       "Copilot Free": "AI credit allowance; amount not specified on the checked billing page",
@@ -3011,12 +3513,12 @@
     },
       "notes": [
       "For GPT-5.6 Sol, Copilot lists $4/$20 per 1M input/output tokens while OpenAI's current direct API rates are $5/$30; keep the two rate cards distinct.",
-      "GitHub lists Gemini 3.8 Flash at $0.75 input and $3.75 output through 2026-12-31, and Gemini 4 Argon at $2/$10 until 2026-12-01.",
-        "GPT-5.6 Sol, Terra, Luna and GPT-6 Astra, Sol, Luna, 6.1 Sol and 6.1 Terra carry a cache write cost on top of cached input. Earlier OpenAI models do not. Anthropic models all do.",
+      "GitHub lists Gemini 3.8 Flash at $0.75 input and $3.75 output through 2026-12-31, Gemini 4 Argon and Carbon at $2/$10 until 2026-12-01, and MAI Code 2 / Flash promotional rates through 2027-05-17. Carbon returns to $4/$20 after its promotion.",
+      "GPT-5.6 Sol and Luna plus GPT-6 Astra, Sol, Luna, 6.1 Sol, 6.1 Terra, 6.2 Astra and 6.2 Sol carry cache-write costs on top of cached input. Earlier OpenAI models do not; Anthropic models all do.",
       "Copilot code review does not disclose which model it picks, so its per-token cost varies between reviews, and it also consumes GitHub Actions minutes.",
       "Legacy annual Copilot Pro and Pro+ plans on request-based billing still use model multipliers; every current plan is per-token.",
       "GPT-5.3-Codex is GitHub's current base and LTS model for Business and Enterprise, designated 2026-03-18.",
-      "Between September 23 and September 29, Claude Opus 5.5, Claude Sonnet 5.5 and GPT-6.1 Sol were added to the Copilot model and pricing tables."
+      "November additions are Claude Fable 5.2, Gemini 4 Carbon, Gemini 4 Hydrogen, Gemini 4 Neon, GPT-6.2 Astra and GPT-6.2 Sol. Gemini Decision 1 and Claude Mythos 5.2 are not in Copilot."
     ],
     "sources": [
       "github-copilot-pricing",

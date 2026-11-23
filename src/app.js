@@ -11,14 +11,17 @@
   function versionLine(){
     return 'code v'+CODE_VERSION+' \u00b7 data v'+(DATA.data_version||'?')+' \u00b7 schema '+(DATA.schema_version||'?');
   }
-  var VC = { Anthropic:'#A8480B', OpenAI:'#0B6E63', Google:'#4838A0', 'xAI':'#8E2A55' };
+  var VC = { Anthropic:'#A8480B', OpenAI:'#0B6E63', Google:'#4838A0', 'xAI':'#8E2A55', Microsoft:'#2867B2' };
   var BIG = { frontier:1, flagship:1 };
-  var BENCH_ORDER = ['deepswe','tb40','tb21','swe_pro','programbench','swe_verified','tb20'];
-  var state = { view:'timeline', bench:'deepswe', vendor:'all', compare:[], pricing:'vendor' };
+  var BENCH_ORDER = ['tb40','deepswe','tb21','swe_pro','programbench','swe_verified','tb20'];
+  var state = { view:'timeline', bench:'tb40', vendor:'all', compare:[], pricing:'vendor' };
   var DAY = 864e5;
 
   function d2n(s){ var p=s.split('-'); return Date.UTC(+p[0],+p[1]-1,+p[2]); }
   function fmtMo(n){ return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][new Date(n).getUTCMonth()]; }
+  function yearOf(n){ return new Date(n).getUTCFullYear(); }
+  function monthStart(n){ var d=new Date(n); return Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),1); }
+  function addMonths(n,count){ var d=new Date(n); return Date.UTC(d.getUTCFullYear(),d.getUTCMonth()+count,1); }
   function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
   function shortName(n){ return String(n).replace(' / Mythos 5.1','').replace(' / Mythos 5',''); }
   function col(v){ return VC[v] || '#63707E'; }
@@ -168,15 +171,23 @@
     if(state.view === 'timeline'){
       var xs = all.map(function(m){ return d2n(m.released); });
       recentUnscored.forEach(function(m){ xs.push(d2n(m.released)); });
-      var x0 = Math.min.apply(null,xs) - 8*DAY, x1 = Math.max.apply(null,xs) + 10*DAY;
+      var x0 = Math.min.apply(null,xs) - 8*DAY;
+      var latestRelease = Math.max.apply(null,xs);
+      var x1 = Math.max(latestRelease + 10*DAY, d2n(DATA.window.to));
       X = function(t){ return L + (t-x0)/(x1-x0)*(W-L-R); };
-      for(var mo=0; mo<=9; mo++){
-        var tt = Date.UTC(2026,mo,1); if(tt<x0||tt>x1) continue;
+      var months = (yearOf(x1)-yearOf(x0))*12 + new Date(x1).getUTCMonth()-new Date(x0).getUTCMonth();
+      var tickMonths = months > 36 ? 6 : (months > 18 ? 3 : 1);
+      var multiYear = yearOf(x0)!==yearOf(x1);
+      var firstTick = monthStart(x0);
+      for(var tick=firstTick; tick<=x1; tick=addMonths(tick,tickMonths)){
+        var tt=tick; if(tt<x0){ continue; }
         s.push('<line class="gl" x1="'+X(tt)+'" y1="'+T+'" x2="'+X(tt)+'" y2="'+(H-B)+'"/>');
-        s.push('<text class="axlab" x="'+X(tt)+'" y="'+(H-B+15)+'" text-anchor="middle">'+fmtMo(tt)+'</text>');
+        var tickText = fmtMo(tt)+(multiYear ? ' \''+String(yearOf(tt)).slice(-2) : '');
+        s.push('<text class="axlab" x="'+X(tt)+'" y="'+(H-B+15)+'" text-anchor="middle">'+tickText+'</text>');
       }
       s.push('<line class="ax" x1="'+L+'" y1="'+(H-B)+'" x2="'+(W-R)+'" y2="'+(H-B)+'"/>');
-      s.push('<text class="axlab" x="'+L+'" y="'+(H-B+31)+'">release date, 2026 \u2014 y axis is '+esc(def.name+' '+(def.version||''))+'</text>');
+      var yearText = multiYear ? yearOf(x0)+'–'+yearOf(x1) : String(yearOf(x0));
+      s.push('<text class="axlab" x="'+L+'" y="'+(H-B+31)+'">release date, '+yearText+' \u2014 y axis is '+esc(def.name+' '+(def.version||''))+'</text>');
 
       descentPairs(b).forEach(function(p){
         if(state.vendor!=='all' && p.now.vendor!==state.vendor && p.then.vendor!==state.vendor) return;
@@ -310,7 +321,7 @@
     if(!find(state.compare[1])){
       var firstModel = find(state.compare[0]);
       var match = models.filter(function(m){
-        return m.id!==state.compare[0] && Object.keys(DATA.benchmarks).some(function(b){
+        return m.id!==state.compare[0] && BENCH_ORDER.some(function(b){
           return firstModel && firstModel.scores && firstModel.scores[b] && m.scores && m.scores[b];
         });
       })[0];
@@ -344,7 +355,8 @@
     var metrics = ['input','output'].map(function(key){
       return { label:(key==='input'?'Input':'Output')+' price', values:selected.map(function(m){return price(m,key);}), price:true };
     });
-    Object.keys(DATA.benchmarks).forEach(function(key){
+    BENCH_ORDER.forEach(function(key){
+      if(!DATA.benchmarks[key]) return;
       var def=DATA.benchmarks[key];
       var scores=selected.map(function(m){return m.scores && m.scores[key];});
       if(!scores[0] && !scores[1]) return;
@@ -485,6 +497,11 @@
       return '<li><strong>'+esc(who)+esc(bn)+'</strong>'+vals+' \u2014 '+esc(c.note)+(links?'<span class="src">'+links+'</span>':'')+'</li>';
     }).join('');
     document.getElementById('stamp-date').textContent = DATA.window.from+' \u2192 '+DATA.window.to+'  \u00b7  '+versionLine();
+    var fromYear = DATA.window.from.slice(0,4), toYear = DATA.window.to.slice(0,4);
+    var titleRange = fromYear===toYear
+      ? fmtMo(d2n(DATA.window.from))+'–'+fmtMo(d2n(DATA.window.to))+' '+toYear
+      : fmtMo(d2n(DATA.window.from))+' '+fromYear+'–'+fmtMo(d2n(DATA.window.to))+' '+toYear;
+    document.title = 'Agentic coding capability and price, '+titleRange;
     document.getElementById('foot').textContent =
       versionLine()+'. '+DATA.models.length+' records across '+vendors().length+' labs, generated '+DATA.generated_at+
       '. Scores carry their harness and confidence in the source JSON; vendor-run figures typically sit above standardized third-party runs on the same benchmark version. Treat gaps under three points as noise.';

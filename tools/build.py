@@ -21,7 +21,7 @@ OUT_NAME = "agentic-model-timeline.html"
 
 SUPPORTED_SCHEMA_MAJOR = 1
 SEMVER = re.compile(r"^\d+\.\d+\.\d+$")
-VENDORS = {"Anthropic", "OpenAI", "Google", "xAI"}
+VENDORS = {"Anthropic", "OpenAI", "Google", "xAI", "Microsoft"}
 TIERS = {"frontier", "flagship", "mid", "efficient", "coding"}
 CONFIDENCE = {"high", "medium", "low"}
 

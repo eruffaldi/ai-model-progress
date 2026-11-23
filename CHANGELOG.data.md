@@ -4,6 +4,10 @@ Generated from `data/agentic-model-timeline.json` by `tools/build.py`. Do not ed
 
 Versions marked *reconstructed* were rebuilt from session history; no file snapshot exists for them.
 
+## 1.5.0 — 2026-11-23
+
+Added Claude Fable 5.2 and restricted Mythos 5.2, Gemini Decision 1, Gemini 4 Hydrogen and Neon, GPT-6.2 Astra and Sol, and Microsoft MAI Code 2 and Flash with published benchmark and Copilot rates. Gemini 4 Carbon moved from restricted preview to general availability and joined Copilot. Extended the timeline through November with a data-driven multi-year axis ready for 2027, refreshed the catalogue and promotional expiry metadata, and documented the Fable 5.2 benchmark conflict.
+
 ## 1.3.0 — 2026-11-09
 
 Added Claude Haiku 5.5, Gemini 4 Argon, GPT-6.1 Terra and restricted Gemini 4 Carbon with available Terminal-Bench 4.0 scores and Copilot rates. Added GPT-6.1 Sol's Vals score, corrected Sonnet 5.5 cache-read pricing and benchmark effort, and documented Haiku score and Gemini pricing discrepancies.

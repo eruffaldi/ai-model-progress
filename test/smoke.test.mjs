@@ -43,18 +43,59 @@ test("default chart draws a point per scored model", () => {
   const svg = doc.getElementById("chart");
   const pts = svg.querySelectorAll("rect, circle").length;
   const bench = Object.keys(data.benchmarks).find((b) =>
-    pressed.textContent.startsWith(data.benchmarks[b].name.replace("Terminal-Bench", "TB").replace("SWE-bench", "SWE")));
+    pressed.textContent === data.benchmarks[b].name.replace("Terminal-Bench", "TB").replace("SWE-bench", "SWE") +
+      (data.benchmarks[b].name.startsWith("Terminal") ? ` ${data.benchmarks[b].version}` : ""));
+  assert.equal(bench, "tb40", "Terminal-Bench 4.0 is the default performance benchmark");
   const scored = data.models.filter((m) => m.scores[bench]).length;
   assert.equal(pts, scored);
 });
 
-test("timeline marks GPT-6.1 Sol without inventing a score", () => {
+test("timeline marks a November release without inventing a score", () => {
   const { doc } = load();
+  const deepswe = [...doc.querySelectorAll("#bench-seg button")].find((button) => button.textContent === "DeepSWE");
+  deepswe.dispatchEvent(new doc.defaultView.MouseEvent("click", { bubbles: true }));
   const markers = [...doc.querySelectorAll("#chart .unscored-release")];
-  assert.ok(markers.some((marker) => /GPT-6\.1 Sol.*2026-09-29.*no published DeepSWE score/.test(marker.querySelector("title").textContent)));
+  assert.ok(markers.some((marker) => /GPT-6\.2 Astra.*2026-11-17.*no published DeepSWE score/.test(marker.querySelector("title").textContent)));
   const rows = markers.map((marker) => marker.getAttribute("d").match(/^M[-.\d]+ ([-.\d]+)/)?.[1]);
   assert.equal(new Set(rows).size, markers.length, "unscored release markers use separate rows");
-  assert.match(doc.getElementById("chart").textContent, /GPT-6\.1 Sol/);
+  assert.match(doc.getElementById("chart").textContent, /GPT-6\.2 Astra/);
+});
+
+test("timeline includes November and remains data-driven into 2027", () => {
+  const { dom, doc } = load();
+  assert.match(doc.getElementById("chart").textContent, /Nov/);
+  assert.match(doc.title, /Nov 2026/);
+  const next = structuredClone(data);
+  next.window.to = "2027-12-31";
+  doc.getElementById("paste").value = JSON.stringify(next);
+  doc.getElementById("apply").dispatchEvent(new dom.window.MouseEvent("click", { bubbles: true }));
+  assert.match(doc.getElementById("chart").textContent, /release date, 2026–2027/);
+  assert.match(doc.getElementById("chart").textContent, /'27/);
+  assert.match(doc.title, /Dec 2027/);
+});
+
+test("Google Argon, Carbon and Hydrogen are tracked", () => {
+  const { doc } = load();
+  const expected = ["Gemini 4 Argon", "Gemini 4 Carbon", "Gemini 4 Hydrogen"];
+  const googleModels = data.models.filter((model) => model.vendor === "Google");
+  for (const name of expected) {
+    assert.ok(googleModels.some((model) => model.name === name && model.availability === "ga"));
+  }
+  const options = [...doc.getElementById("compare-first").options].map((option) => option.textContent);
+  for (const name of expected) assert.ok(options.includes(name));
+});
+
+test("spider plot prioritizes Terminal-Bench 4.0", () => {
+  const { dom, doc } = load();
+  const change = (id, value) => {
+    const select = doc.getElementById(id);
+    select.value = value;
+    select.dispatchEvent(new dom.window.Event("change", { bubbles: true }));
+  };
+  change("compare-first", "anthropic-haiku-5-5");
+  change("compare-second", "google-gemini-4-argon");
+  const labels = [...doc.querySelectorAll("#compare-chart .radar-label")].map((label) => label.textContent);
+  assert.equal(labels[2], "TB 4.0");
 });
 
 test("every benchmark x view x vendor combination renders without error", () => {
@@ -108,7 +149,7 @@ test("model comparison redraws shared scores and selected pricing", () => {
   assert.match(doc.getElementById("compare-body").textContent, /mini-SWE-agent/);
   change("compare-pricing", "copilot");
   assert.match(doc.getElementById("compare-body").textContent, /\$0\.1 \/ 1M/);
-  change("compare-second", "google-gemini-4-carbon");
+  change("compare-second", "google-gemini-decision-1");
   assert.equal(doc.getElementById("compare-chart").hidden, true);
   assert.match(doc.getElementById("compare-empty").textContent, /three shared metrics/);
   assert.match(doc.getElementById("compare-body").textContent, /Not plotted/);

@@ -1,6 +1,6 @@
 # Agentic-coding model tracker
 
-Timeline, benchmarks and GitHub Copilot pricing for Anthropic, OpenAI, Google and xAI models, rendered as one self-contained HTML page with no runtime network dependencies.
+Timeline, benchmarks and GitHub Copilot pricing for Anthropic, OpenAI, Google, xAI and Microsoft coding models, rendered as one self-contained HTML page with no runtime network dependencies.
 
 ## Layout
 
